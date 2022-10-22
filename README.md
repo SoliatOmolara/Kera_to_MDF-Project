@@ -1,7 +1,7 @@
 # Kera_to_MDF-Project
 
 ## DESCRIPTION
-This Project is for the Task 2 of the ModECI MDF December 2022 Outreachy Internship Cohort. This project is a tutorial on how to create Keras models and then convert to MDF models.
+This Project is for the Task 2 of the ModECI MDF December 2022 Outreachy Internship Cohort. This project is a tutorial on how to creating MDF models with Keras.
 For this project i will be creating a simple step-by-step keras model then I will convert it into MDF model.
 
 ## REQUIREMENT
@@ -27,7 +27,7 @@ python -m venv (project directory)
 This project was built with [VsCode](https://code.visualstudio.com/).
 
 ## DATASET
-The dataset I used for this project is the **PIMA INDIA DIABETES DATASET ** which I got from [kaggle](https://www.kaggle.com/). The dataset conprises of 9 columns, which includes;
+The dataset I used for this project is the **PIMA INDIA DIABETES DATASET** that I got from [kaggle](https://www.kaggle.com/). The dataset comprises of 9 columns which I later convert to int(0 to 8), they includes;
 
 1. Pregnancies
 2. Glucose
