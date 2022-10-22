@@ -1,0 +1,6 @@
+tensorflow
+pandas
+numpy
+sklearn
+scipy
+modeci_mdf
