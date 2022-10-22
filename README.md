@@ -26,3 +26,19 @@ python -m venv (project directory)
 ```
 This project was built with [VsCode](https://code.visualstudio.com/).
 
+## DATASET
+The dataset I used for this project is the **PIMA INDIA DIABETES DATASET ** which I got from [kaggle](https://www.kaggle.com/). The dataset conprises of 9 columns, which includes;
+
+1. Pregnancies
+2. Glucose
+3. BloodPressure
+4. SkinThickness
+5. Insulin
+6. BMI
+7. DiabetesPedigreeFunction
+8. Age
+9. Outcome
+
+It also comprise of 768 rows.
+
+
