@@ -9,11 +9,11 @@ def keras_model():
     model= load_model('model.h5')
     return model
 
-#function to load weight and activation for the model layers
+#function to load weight and activation for the model layers cudart64_110.dll
 def weight_and_activation(model):
     params= {}
     activation=[]
-    layers_of_model= ['dense', 'dense_1', 'dense_2']
+    layers_of_model= ['dense', 'dense_1', 'dense_2', 'dense_3', 'dense_4']
     for item in layers_of_model:
         dic= {}
         layer= model.get_layer(item)
@@ -29,6 +29,7 @@ params, activation= weight_and_activation(model= keras_model())
 
 # function to convert the keras to Mdf
 def converting_keras_mdf(input_array):
+    global activate_1, activate_2, activate_3, activate_4, activate_5
     # creating model and appending to graph
     model_mdf= Model(id= 'AMELA')
     graph= Graph(id= 'Converting Keras to MDF')
@@ -56,12 +57,12 @@ def converting_keras_mdf(input_array):
     # creating activation for the first node and,appending to the graph and connect it to input layer node
     activate_1= Node(id= 'dense_activation')
     activate_1.input_ports.append(InputPort(id='input'))
-    activate= Parameter(id= 'relu',value = 'input*input')
+    activation= Parameter(id= 'relu',value = 'input*input')
     
-    activate.conditions.append(ParameterCondition(id= 'test',
+    activation.conditions.append(ParameterCondition(id= 'test',
                             test= 'relu=0', value = 'relu'))
 
-    activate_1.parameters.append(activate)
+    activate_1.parameters.append(activation)
     activate_1.output_ports.append(OutputPort(id='activate_1', value= 'relu' ))
     graph.nodes.append(activate_1)
     simple_connect(first_node, activate_1, graph)
@@ -86,9 +87,9 @@ def converting_keras_mdf(input_array):
     # creating second layer activation node, to append to graph and connect it to second layer node
     activate_2= Node(id= 'dense1_activation')
     activate_2.input_ports.append(InputPort(id='input'))
-    activate= Parameter(id= 'relu',
+    activation= Parameter(id= 'relu',
                       value = 'input*input')
-    activate.conditions.append(ParameterCondition(id= 'test',
+    activation.conditions.append(ParameterCondition(id= 'test',
                             test= 'relu=1', value = 'relu'))
 
     activate_2.parameters.append(activation)
@@ -114,7 +115,7 @@ def converting_keras_mdf(input_array):
 
     activate_3= Node(id= 'dense2_activation')
     activate_3.input_ports.append(InputPort(id='input'))
-    activate= Parameter(id= 'sigmoid', 
+    activation= Parameter(id= 'sigmoid', 
                          value= '1/(1 + (2.71828**(-input)))' )
     activate_3.parameters.append(activation)
     activate_3.output_ports.append(OutputPort(id='activate_2', value= 'sigmoid' ))
@@ -129,20 +130,20 @@ def converting_keras_mdf(input_array):
     feedForward= Parameter(id= 'feedForward',value= '(dense3_weight) + dense3_bias')
     fourth_node.parameters.append(feedForward)
     fourth_node.output_ports.append(OutputPort(id= 'dense3_output', value= 'feedForward trained network'))
-    graph.nodes.append(first_node)
+    graph.nodes.append(fourth_node)
     simple_connect(activate_3, fourth_node, graph)
 
     # creating activation for the fourth node and,appending to the graph and connect it to input layer node
     activate_4= Node(id= 'dense_activation')
     activate_4.input_ports.append(InputPort(id='input'))
-    activate= Parameter(id= 'relu',value = 'input*input')
+    activation= Parameter(id= 'relu',value = 'input*input')
     
-    activate.conditions.append(ParameterCondition(id= 'test',
+    activation.conditions.append(ParameterCondition(id= 'test',
                             test= 'relu=0', value = 'relu'))
 
-    activate_4.parameters.append(activate)
+    activate_4.parameters.append(activation)
     activate_4.output_ports.append(OutputPort(id='activate_4', value= 'relu' ))
-    graph.nodes.append(activate_1)
+    graph.nodes.append(activate_4)
     simple_connect(fourth_node, activate_4, graph)
     
     # create fifth layer node, append to graph and connect it to second layer activation node
@@ -157,13 +158,13 @@ def converting_keras_mdf(input_array):
 
     fifth_node.output_ports.append(OutputPort(id= 'dense4_output', value= 'feedForward'))
     graph.nodes.append(fifth_node)
-    simple_connect(activate_2, fifth_node, graph)
+    simple_connect(activate_4, fifth_node, graph)
     
-    # create third layer activation node, append to graph and connect it to third layer node
+    # create fifth layer activation node, append to graph and connect it to fifth layer node
 
-    activate_5= Node(id= 'dense4_activation')
+    activate_5 = Node(id= 'dense4_activation')
     activate_5.input_ports.append(InputPort(id='input'))
-    activate= Parameter(id= 'sigmoid', 
+    activation= Parameter(id= 'sigmoid', 
                          value= '1/(1 + (2.71828**(-input)))' )
     activate_5.parameters.append(activation)
     activate_5.output_ports.append(OutputPort(id='activate_5', value= 'sigmoid' ))
